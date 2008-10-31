@@ -1,0 +1,64 @@
+class Main
+
+ def initialize(arq,mode)
+   fname = arq   
+   mod = mode
+   @file = File.new(fname,mod)
+   @migrate = ''
+  end
+ 
+ 
+ def generate(quant)
+   s = 'a'
+   quant.times{
+   @migrate << template(s)
+   s.next!
+   }
+ end
+ 
+ 
+ def save
+   @file.puts @migrate
+   
+ end
+
+
+ def template(dif)
+"   #-------------------------------------------------------------------------
+    #Cria Tabela de #{dif}usuarios   
+   create_table :#{dif}usuarios, :force => true do |t|
+      t.string :login, :limit => 40
+      t.string :email, :limit => 100
+      t.string :nome, :limit => 100
+      t.boolean :active, :default=> true
+      t.timestamps 
+    end
+    
+    
+    #-------------------------------------------------------------------------
+    #Cria Tabela de #{dif}Grupos
+    create_table :#{dif}grupos, :force => true do |t|
+      t.string :nome, :null=> false, :limit=> 100
+      t.text :descricao
+      t.timestamps
+
+    end
+
+    #-------------------------------------------------------------------------
+    #Cria Tabela de Grupo-Usuarios
+    create_table :#{dif}grupo_#{dif}usuarios do |t|
+      t.belongs_to :#{dif}grupo, :null=> false
+      t.belongs_to :#{dif}usuario, :null=> false
+      t.timestamps
+    end" 
+
+
+   
+ end
+ 
+ mig = Main.new('user.rb','w')
+ mig.generate(10)
+ mig.save
+ 
+ 
+end
