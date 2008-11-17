@@ -1,3 +1,13 @@
-== joomanje
+== Crazy Migrates Generator
 
-Você deve documentar seu projeto aqui.
+Crie Dezenas de Migrações Válidas com esse pequeno script!
+
+
+
+== Uso
+
+ruby main.rb
+
++ Informe o numero de tabelas quando requisitado.
++ A migração Gerdada se econtra na pasta out/
+
